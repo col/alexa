@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "sessionAttributes": {},
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Hello. This is a sample Alexa skill."
+    },
+    "card": null,
+    "reprompt": null,
+    "shouldEndSession": true
+  }
+}
