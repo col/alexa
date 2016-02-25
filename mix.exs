@@ -3,7 +3,7 @@ defmodule Alexa.Mixfile do
 
   def project do
     [app: :alexa,
-     version: "0.0.1",
+     version: "0.0.5",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -37,6 +37,6 @@ defmodule Alexa.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:poison, "~> 1.5.2"}]
   end
 end
