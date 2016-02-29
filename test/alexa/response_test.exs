@@ -17,6 +17,17 @@ defmodule Alexa.ResponseTest do
     }
     say = Response.say(response)
     assert "Hello World!" = say
-  end  
+  end
 
+  test "should_end_session/1" do
+    response = %Response{ response: %ResponseElement{shouldEndSession: false} }
+    value = Response.should_end_session(response)
+    assert false == value
+  end
+
+  test "should_end_session/2" do
+    response = %Response{ response: %ResponseElement{shouldEndSession: false} }
+    response = Response.should_end_session(response, true)
+    assert true == Response.should_end_session(response)
+  end
 end

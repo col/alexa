@@ -16,4 +16,12 @@ defmodule Alexa.Response do
     %Alexa.Response{response: ResponseElement.empty_response}
   end
 
+  def should_end_session(response, value) do
+    %{ response | response: %{response.response | shouldEndSession: value} }
+  end
+
+  def should_end_session(response) do
+    response.response.shouldEndSession
+  end
+
 end
