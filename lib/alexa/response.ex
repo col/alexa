@@ -1,5 +1,5 @@
 defmodule Alexa.Response do
-  alias Alexa.{ResponseElement, OutputSpeech}
+  alias Alexa.{ResponseElement, OutputSpeech, Reprompt}
 
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
@@ -10,6 +10,15 @@ defmodule Alexa.Response do
 
   def say(response) do
     response.response.outputSpeech.text
+  end
+
+  def reprompt(response, text) do
+    response_element = %{response.response | reprompt: %Reprompt{ outputSpeech: OutputSpeech.plainSpeech(text) }}
+    %{response | response: response_element}
+  end
+
+  def reprompt(response) do
+    # Map.get(response.response.reprompt, :outputSpeech, %OutputSpeech{}).text
   end
 
   def empty_response() do

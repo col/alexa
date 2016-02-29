@@ -1,6 +1,6 @@
 defmodule Alexa.ResponseTest do
   use ExUnit.Case
-  alias Alexa.{Response, ResponseElement, OutputSpeech}
+  alias Alexa.{Response, ResponseElement, OutputSpeech, Reprompt}
 
   test "say/2" do
     response = %Response{}
@@ -17,6 +17,27 @@ defmodule Alexa.ResponseTest do
     }
     say = Response.say(response)
     assert "Hello World!" = say
+  end
+
+  test "reprompt/2" do
+    response = Response.reprompt(%Response{}, "What's your name?")
+    assert response.response.reprompt.outputSpeech.type == "PlainText"
+    assert response.response.reprompt.outputSpeech.text == "What's your name?"
+  end
+
+  test "reprompt/2" do
+    response = %Response{
+      response: %ResponseElement{
+        reprompt: %Reprompt{
+          outputSpeech: %OutputSpeech{
+            type: "PlainText",
+            text: "What's your name?"
+          }
+        }
+      }
+    }
+    result = Response.reprompt(response)
+    assert "What's your name?" = result
   end
 
   test "should_end_session/1" do
