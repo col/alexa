@@ -3,9 +3,13 @@ defmodule Alexa.Response do
 
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
-  def say(request, text) do
-    response_element = %{request.response | outputSpeech: OutputSpeech.plainSpeech(text)}
-    %{request | response: response_element}
+  def say(response, text) do
+    response_element = %{response.response | outputSpeech: OutputSpeech.plainSpeech(text)}
+    %{response | response: response_element}
+  end
+
+  def say(response) do
+    response.response.outputSpeech.text
   end
 
   def empty_response() do

@@ -10,8 +10,18 @@ defmodule Alexa.Request do
     end
   end
 
+  def intent_name(request) do
+    request.request.intent.name
+  end
+
+  def slot_value(request, name) do
+    (Map.get(request.request.intent, :slots) || %{})
+    |> Map.get(name, %{})
+    |> Map.get("value", nil)
+  end
+
   def from_params(params) do
-    Poison.decode!(Poison.encode!(params), as: Request)
+    Poison.decode!(Poison.encode!(params), as: %Request{})
   end
 
 end
