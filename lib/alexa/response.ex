@@ -18,7 +18,7 @@ defmodule Alexa.Response do
   end
 
   def reprompt(response) do
-    # Map.get(response.response.reprompt, :outputSpeech, %OutputSpeech{}).text
+    Map.get(response.response.reprompt, :outputSpeech, %OutputSpeech{}).text
   end
 
   def empty_response() do

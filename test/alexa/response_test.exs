@@ -25,7 +25,7 @@ defmodule Alexa.ResponseTest do
     assert response.response.reprompt.outputSpeech.text == "What's your name?"
   end
 
-  test "reprompt/2" do
+  test "reprompt/1" do
     response = %Response{
       response: %ResponseElement{
         reprompt: %Reprompt{
