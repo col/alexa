@@ -24,4 +24,12 @@ defmodule Alexa.Response do
     response.response.shouldEndSession
   end
 
+  def attribute(response, key) do
+    Map.get(response.sessionAttributes, key)
+  end
+
+  def add_attribute(response, key, value) do
+    %{ response | sessionAttributes: Map.put(response.sessionAttributes, key, value) }
+  end
+
 end
