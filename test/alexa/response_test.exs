@@ -29,7 +29,18 @@ defmodule Alexa.ResponseTest do
     response = %Response{ response: %ResponseElement{shouldEndSession: false} }
     response = Response.should_end_session(response, true)
     assert true == Response.should_end_session(response)
-  end  
+  end
+
+  test "attributes/1" do
+    response = %Response{ sessionAttributes: %{ "Key" => "Value" } }
+    assert %{ "Key" => "Value" } = Response.attributes(response)
+  end
+
+  test "attributes/2" do
+    response = %Response{ sessionAttributes: %{ "Key" => "Value" } }
+    response = Response.attributes(response, %{ "Key2" => "Value2" })
+    assert %{ "Key2" => "Value2" } = Response.attributes(response)
+  end
 
   test "attribute/2" do
     response = %Response{ sessionAttributes: %{ "Key" => "Value" } }

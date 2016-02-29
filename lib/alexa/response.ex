@@ -32,4 +32,12 @@ defmodule Alexa.Response do
     %{ response | sessionAttributes: Map.put(response.sessionAttributes, key, value) }
   end
 
+  def attributes(response) do
+    response.sessionAttributes
+  end
+
+  def attributes(response, attributes) do
+    %{response | sessionAttributes: attributes}
+  end
+
 end
