@@ -24,4 +24,15 @@ defmodule Alexa.Request do
     Poison.decode!(Poison.encode!(params), as: %Request{})
   end
 
+  def attributes(request) do
+    request.session.attributes
+  end
+
+  def attribute(request, key) do
+    Map.get(attributes(request), key)
+  end
+
+  def user_id(request) do
+    Map.get(request.session, :user, %{}) |> Map.get("userId")
+  end
 end

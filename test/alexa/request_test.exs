@@ -35,4 +35,22 @@ defmodule Alexa.RequestTest do
     assert request == Poison.decode!(request_body, as: %Request{})
   end
 
+  test "attributes" do
+    attributes = %{ "key" => "value" }
+    request = %Request{ session: %Session{ attributes: attributes }}
+    result = Request.attributes(request)
+    assert result == attributes
+  end
+
+  test "attribute" do
+    request = %Request{ session: %Session{ attributes: %{ "key" => "value" } }}
+    result = Request.attribute(request, "key")
+    assert "value" == result
+  end
+
+  test "user_id" do
+    request = %Request{ session: %Session{ user: %{ "userId" => "user123" } }}
+    user_id = Request.user_id(request)
+    assert "user123" = user_id
+  end
 end
