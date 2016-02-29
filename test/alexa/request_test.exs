@@ -14,6 +14,13 @@ defmodule Alexa.RequestTest do
     assert "SampleName" = intent_name
   end
 
+  test "slots" do
+    slots = %{ "testKey" => %{ "name" => "testKey", "value" => "testValue" } }
+    request = %Request{ request: %RequestElement{ intent: %Intent{ slots: slots } } }
+    result = Request.slots(request)
+    assert slots == result
+  end
+
   test "slot_value" do
     dollarAmountSlot = %{ "name" => "dollarAmount", "value" => "100" }
     intent = %Intent{ name: "SampleName", slots: %{ "dollarAmount" => dollarAmountSlot } }
@@ -26,6 +33,16 @@ defmodule Alexa.RequestTest do
     request = %Request{}
     slot_value = Request.slot_value(request, "dollarAmount")
     assert nil == slot_value
+  end
+
+  test "slot_attributes returns the slot values in a simple map" do
+    intent = %Intent{ slots: %{
+      "key1" => %{ "name" => "key1", "value" => "100" },
+      "key2" => %{ "name" => "key2", "value" => "200" }
+    }}
+    request = %Request{ request: %RequestElement{ intent: intent } }
+    result = Request.slot_attributes(request)
+    assert %{ "key1" => "100", "key2" => "200" } = result
   end
 
   test "from_params" do

@@ -14,10 +14,19 @@ defmodule Alexa.Request do
     request.request.intent.name
   end
 
+  def slots(request) do
+    Map.get(request.request.intent, :slots) || %{}
+  end
+
   def slot_value(request, name) do
-    (Map.get(request.request.intent, :slots) || %{})
+    slots(request)
     |> Map.get(name, %{})
     |> Map.get("value", nil)
+  end
+
+  def slot_attributes(request) do
+    slots(request)
+    |> Enum.reduce(%{}, fn({k, %{ "value" => value}}, map) -> Map.put(map, k, value) end)
   end
 
   def from_params(params) do
