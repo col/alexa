@@ -46,6 +46,11 @@ defmodule Alexa.Request do
     Map.get(attributes(request), key)
   end
 
+  def set_attribute(request, key, value) do
+    session = %{ request.session | attributes: Map.put(attributes(request), key, value) }
+    %{ request | session: session }
+  end
+
   def user_id(request) do
     Map.get(request.session, :user, %{}) |> Map.get("userId")
   end

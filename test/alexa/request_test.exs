@@ -75,6 +75,18 @@ defmodule Alexa.RequestTest do
     assert "value" == result
   end
 
+  test "set_attribute/3" do
+    request = %Request{ session: %Session{ attributes: %{ "key" => "value" } }}
+    request = Request.set_attribute(request, "key2", "value2")
+    assert %{ "key" => "value", "key2" => "value2" } == Request.attributes(request)
+  end
+
+  test "set_attribute/3 - replaces existing keys" do
+    request = %Request{ session: %Session{ attributes: %{ "key" => "value" } }}
+    request = Request.set_attribute(request, "key", "value2")
+    assert %{ "key" => "value2" } == Request.attributes(request)
+  end
+
   test "user_id" do
     request = %Request{ session: %Session{ user: %{ "userId" => "user123" } }}
     user_id = Request.user_id(request)

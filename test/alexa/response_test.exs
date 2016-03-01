@@ -40,6 +40,15 @@ defmodule Alexa.ResponseTest do
     assert "What's your name?" = result
   end
 
+  test "reprompt/1 when it's nil" do
+    response = %Response{
+      response: %ResponseElement{
+        reprompt: nil
+      }
+    }
+    assert is_nil(Response.reprompt(response))
+  end
+
   test "should_end_session/1" do
     response = %Response{ response: %ResponseElement{shouldEndSession: false} }
     value = Response.should_end_session(response)
