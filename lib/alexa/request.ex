@@ -26,7 +26,12 @@ defmodule Alexa.Request do
 
   def slot_attributes(request) do
     slots(request)
-    |> Enum.reduce(%{}, fn({k, %{ "value" => value}}, map) -> Map.put(map, k, value) end)
+    |> Enum.reduce(%{}, fn({name, slot}, map) ->
+      case Map.get(slot, "value") do
+        nil -> map
+        value -> Map.put(map, name, value)
+      end
+    end)
   end
 
   def from_params(params) do

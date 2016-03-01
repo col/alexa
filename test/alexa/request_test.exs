@@ -45,6 +45,16 @@ defmodule Alexa.RequestTest do
     assert %{ "key1" => "100", "key2" => "200" } = result
   end
 
+  test "slot_attributes ignores slots with no value" do
+    intent = %Intent{ slots: %{
+      "key1" => %{ "name" => "key1", "value" => "100" },
+      "key2" => %{ "name" => "key2" }
+    }}
+    request = %Request{ request: %RequestElement{ intent: intent } }
+    result = Request.slot_attributes(request)
+    assert %{ "key1" => "100" } = result
+  end
+
   test "from_params" do
     {:ok, request_body} = File.read("samples/request.json")
     params = Poison.decode!(request_body)
