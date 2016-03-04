@@ -3,11 +3,11 @@ defmodule Alexa.Mixfile do
 
   def project do
     [app: :alexa,
-     version: "0.0.14",
+     version: "0.1.0",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     description: "Provides support for implementing an Amazon Alexa Skill.",
+     description: "Framework for implementing an Amazon Alexa Skill.",
      package: package,
      deps: deps]
   end
@@ -24,7 +24,7 @@ defmodule Alexa.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger], mod: {Alexa, []}]
   end
 
   # Dependencies can be Hex packages:
