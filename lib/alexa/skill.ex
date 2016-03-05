@@ -4,12 +4,14 @@ defmodule Alexa.Skill do
     quote do
       use Application
       import Alexa.{Skill, Request, Response}
+      require Logger
 
       @skill_opts unquote(opts)
 
       def start(_type, _args) do
         app_id = @skill_opts[:app_id]
         Alexa.Registry.register_skill(app_id, __MODULE__)
+        Logger.info("Registered #{__MODULE__} with AppId: #{app_id}")
         GenServer.start_link(__MODULE__, nil, name: String.to_atom(app_id))
       end
 
