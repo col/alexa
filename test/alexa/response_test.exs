@@ -7,16 +7,35 @@ defmodule Alexa.ResponseTest do
     response = Response.say(response, "Hello")
     assert response.response.outputSpeech.type == "PlainText"
     assert response.response.outputSpeech.text == "Hello"
+    assert response.response.outputSpeech.ssml == nil
   end
 
   test "say/1" do
     response = %Response{
       response: %ResponseElement{
-        outputSpeech: %OutputSpeech{ text: "Hello World!" }
+        outputSpeech: %OutputSpeech{ type: "PlainText", text: "Hello World!" }
       }
     }
     say = Response.say(response)
     assert "Hello World!" = say
+  end
+
+  test "say_ssml/2" do
+    response = %Response{}
+    response = Response.say_ssml(response, "<speak>Hello</speak>")
+    assert response.response.outputSpeech.type == "SSML"
+    assert response.response.outputSpeech.ssml == "<speak>Hello</speak>"
+    assert response.response.outputSpeech.text == nil
+  end
+
+  test "say_ssml/1" do
+    response = %Response{
+      response: %ResponseElement{
+        outputSpeech: %OutputSpeech{ type: "SSML", ssml: "<speak>Hello World!</speak>" }
+      }
+    }
+    say = Response.say_ssml(response)
+    assert "<speak>Hello World!</speak>" = say
   end
 
   test "reprompt/2" do

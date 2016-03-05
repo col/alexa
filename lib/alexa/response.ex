@@ -4,7 +4,7 @@ defmodule Alexa.Response do
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
   def say(response, text) do
-    response_element = %{response.response | outputSpeech: OutputSpeech.plainSpeech(text)}
+    response_element = %{response.response | outputSpeech: OutputSpeech.plain_speech(text)}
     %{response | response: response_element}
   end
 
@@ -12,8 +12,17 @@ defmodule Alexa.Response do
     response.response.outputSpeech.text
   end
 
+  def say_ssml(response, text) do
+    response_element = %{response.response | outputSpeech: OutputSpeech.ssml_speech(text)}
+    %{response | response: response_element}
+  end
+
+  def say_ssml(response) do
+    response.response.outputSpeech.ssml
+  end
+
   def reprompt(response, text) do
-    response_element = %{response.response | reprompt: %Reprompt{ outputSpeech: OutputSpeech.plainSpeech(text) }}
+    response_element = %{response.response | reprompt: %Reprompt{ outputSpeech: OutputSpeech.plain_speech(text) }}
     %{response | response: response_element}
   end
 
