@@ -49,6 +49,10 @@ defmodule Alexa.Response do
   end
 
   def add_attribute(response, key, value) do
+    set_attribute(response, key, value)
+  end
+
+  def set_attribute(response, key, value) do
     %{ response | sessionAttributes: Map.put(response.sessionAttributes, key, value) }
   end
 

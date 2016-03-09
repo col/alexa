@@ -54,4 +54,9 @@ defmodule Alexa.Request do
   def user_id(request) do
     Map.get(request.session, :user, %{}) |> Map.get("userId")
   end
+
+  def set_user_id(request, user_id) do    
+    session = %{ request.session | user: %{ "userId" => user_id }}
+    %{ request | session: session}
+  end
 end

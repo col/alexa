@@ -92,4 +92,10 @@ defmodule Alexa.RequestTest do
     user_id = Request.user_id(request)
     assert "user123" = user_id
   end
+
+  test "set_user_id" do
+    request = %Request{ session: %Session{ user: %{ "userId" => "user123" } }}
+    request = Request.set_user_id(request, "new_user_id")
+    assert "new_user_id" = Request.user_id(request)
+  end
 end

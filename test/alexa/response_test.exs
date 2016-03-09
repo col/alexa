@@ -102,4 +102,10 @@ defmodule Alexa.ResponseTest do
     assert "Value" = Response.attribute(response, "Key")
   end
 
+  test "set_attribute/3" do
+    response = Response.empty_response()
+    response = Response.set_attribute(response, "Key", "Value")
+    assert "Value" = Response.attribute(response, "Key")
+  end
+
 end
