@@ -66,7 +66,7 @@ defmodule Alexa.Skill do
         {:noreply, nil, state}
       end
 
-      defoverridable [handle_intent: 3]
+      defoverridable [handle_launch: 2, handle_intent: 3, handle_session_ended: 2]
     end
   end
 
