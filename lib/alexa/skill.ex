@@ -29,11 +29,29 @@ defmodule Alexa.Skill do
         # TODO: this is not using the skill process yet, it's just calling the handler directly.
         # TODO: ultimately each alexa session should spawn it's own process and the request
         # TODO: should be delegated to the correct process for handling.
-        handle_intent(intent_name(request), request, empty_response)
+        case type(request) do
+          "LaunchRequest" -> handle_launch(request, empty_response)
+          "IntentRequest" -> handle_intent(intent_name(request), request, empty_response)
+          "SessionEndedRequest" -> handle_session_ended(request, empty_response)
+        end
+      end
+
+      def handle_launch(_, response) do
+        response
+        |> say("Hi")
+        |> should_end_session(false)
       end
 
       def handle_intent(_, _, response) do
-        say(response, "Sorry, I'm not sure what you're on about.")
+        response
+        |> say("Sorry, I don't know how to answer that.")
+        |> should_end_session(false)
+      end
+
+      def handle_session_ended(_, response) do
+        response
+        |> say("Bye")
+        |> should_end_session(true)
       end
 
       def init(_) do

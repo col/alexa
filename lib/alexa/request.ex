@@ -14,6 +14,10 @@ defmodule Alexa.Request do
     request.request.intent.name
   end
 
+  def type(request) do
+    request.request.type
+  end
+
   def slots(request) do
     Map.get(request.request.intent, :slots) || %{}
   end
@@ -55,7 +59,7 @@ defmodule Alexa.Request do
     Map.get(request.session, :user, %{}) |> Map.get("userId")
   end
 
-  def set_user_id(request, user_id) do    
+  def set_user_id(request, user_id) do
     session = %{ request.session | user: %{ "userId" => user_id }}
     %{ request | session: session}
   end
