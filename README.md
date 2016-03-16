@@ -9,7 +9,7 @@ The package can be installed as:
   1. Add alexa to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:alexa, "~> 0.1.2"}]
+          [{:alexa, "~> 0.1.6"}]
         end
 
   2. Add alexa to your list of applications in `mix.exs`:
