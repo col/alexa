@@ -27,7 +27,7 @@ defmodule Alexa.Skill do
 
       def handle_request(request) do
         Logger.debug("### Request ###")
-        Logger.debug(request)
+        Logger.debug("#{inspect request}")
         # TODO: this is not using the skill process yet, it's just calling the handler directly.
         # TODO: ultimately each alexa session should spawn it's own process and the request
         # TODO: should be delegated to the correct process for handling.
