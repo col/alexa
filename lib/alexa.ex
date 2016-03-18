@@ -21,7 +21,7 @@ defmodule Alexa do
     skill = request
       |> Alexa.Request.application_id
       |> Alexa.Registry.get_skill
-
+      
     skill.handle_request(request)
   end
 

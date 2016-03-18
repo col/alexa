@@ -1,7 +1,17 @@
 defmodule Alexa.Request do
-  alias Alexa.{Session, RequestElement, Request}
+  alias Alexa.{Session, RequestElement, Request, Intent}
 
   defstruct [session: %Session{}, version: "1.0", request: %RequestElement{}]
+
+  def intent_request(app_id, intent_name, user_id \\ nil, slot_values \\ nil, attributes \\ %{}) do
+    %Request{
+      session: Session.new(app_id, user_id, attributes),
+      request: %RequestElement{
+        type: "IntentRequest",
+        intent: Intent.new(intent_name, slot_values)
+      }
+    }
+  end
 
   def application_id(request) do
     case request.session.application do
