@@ -1,5 +1,5 @@
 defmodule Alexa.Request do
-  alias Alexa.{Session, RequestElement, Request, Intent}
+  alias Alexa.{Session, RequestElement, Request, Intent, User}
 
   defstruct [session: %Session{}, version: "1.0", request: %RequestElement{}]
 
@@ -66,11 +66,11 @@ defmodule Alexa.Request do
   end
 
   def user_id(request) do
-    Map.get(request.session, :user, %{}) |> Map.get("userId")
+    Map.get(request.session, :user, User.new) |> Map.get(:userId)
   end
 
   def set_user_id(request, user_id) do
-    session = %{ request.session | user: %{ "userId" => user_id }}
-    %{ request | session: session}
+    session = %{ request.session | user: User.new(user_id) }
+    %{ request | session: session }
   end
 end

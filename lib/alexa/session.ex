@@ -1,15 +1,11 @@
 defmodule Alexa.Session do
-  alias Alexa.{Session, Application}
+  alias Alexa.{Session, Application, User}
 
-  defstruct [new: false, sessionId: nil, attributes: %{}, user: nil, application: %Alexa.Application{}]
+  defstruct [new: false, sessionId: nil, attributes: %{}, user: %User{}, application: %Application{}]
 
   def new(app_id, user_id, attributes \\ %{}) do
-    user = case user_id do
-      nil -> nil
-      user_id -> %{ userId: user_id }
-    end
     %Session{
-      user: user,
+      user: User.new(user_id),
       application: %Application{ applicationId: app_id },
       attributes: attributes
     }

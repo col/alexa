@@ -1,6 +1,6 @@
 defmodule Alexa.RequestTest do
   use ExUnit.Case
-  alias Alexa.{Request, Session, RequestElement, Intent}
+  alias Alexa.{Request, Session, RequestElement, Intent, User}
 
   test "application_id" do
     request = %Request{ session: %Session{ application: %{ applicationId: "123" }}}
@@ -88,13 +88,13 @@ defmodule Alexa.RequestTest do
   end
 
   test "user_id" do
-    request = %Request{ session: %Session{ user: %{ "userId" => "user123" } }}
+    request = %Request{ session: %Session{ user: User.new("user123") } }
     user_id = Request.user_id(request)
     assert "user123" = user_id
   end
 
   test "set_user_id" do
-    request = %Request{ session: %Session{ user: %{ "userId" => "user123" } }}
+    request = %Request{ session: %Session{ user: User.new("user123") } }
     request = Request.set_user_id(request, "new_user_id")
     assert "new_user_id" = Request.user_id(request)
   end

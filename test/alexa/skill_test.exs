@@ -1,6 +1,6 @@
 defmodule Alexa.SkillTest do
   use ExUnit.Case
-  alias Alexa.{Request, Response, RequestElement, Intent}
+  alias Alexa.{Request, Response, RequestElement, User}
 
   test "handle_request - LaunchRequest - default response" do
     request = %Request{ request: %RequestElement{ type: "LaunchRequest" } }
@@ -26,7 +26,7 @@ defmodule Alexa.SkillTest do
   defmodule TestSkill do
     use Alexa.Skill, app_id: "my-test-app-id"
 
-    def handle_intent("TestIntent", request, response) do
+    def handle_intent("TestIntent", _, response) do
       response
         |> Response.say("Hello. This is just a test skill.")
         |> Response.should_end_session(true)
@@ -35,7 +35,7 @@ defmodule Alexa.SkillTest do
 
   setup do
     if Alexa.Registry.get_skill("my-test-app-id") == Alexa.UnknownSkill do
-      TestSkill.start
+      TestSkill.start_link
     end
     :ok
   end
