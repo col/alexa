@@ -8,9 +8,6 @@ defmodule Alexa.Skill do
 
       @skill_opts unquote(opts)
 
-      # TODO: Still learning the OTP stuff.. seems I need a 'start_link' for
-      # TODO: Supervisors and 'start' to start it as an application.
-      # TODO: Ultimately I'd like to support both if that's possible.
       def start_link(opts \\ []) do
         app_id = @skill_opts[:app_id]
         Alexa.Registry.register_skill(app_id, __MODULE__)
@@ -18,11 +15,8 @@ defmodule Alexa.Skill do
         GenServer.start_link(__MODULE__, nil, name: String.to_atom(app_id))
       end
 
-      def start() do
-        app_id = @skill_opts[:app_id]
-        Alexa.Registry.register_skill(app_id, __MODULE__)
-        Logger.info("Registered #{__MODULE__} with AppId: #{app_id}")
-        GenServer.start(__MODULE__, nil, name: String.to_atom(app_id))
+      def start(_type \\ nil, args \\ nil) do
+        __MODULE__.start_link(args)
       end
 
       def handle_request(request) do
