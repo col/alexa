@@ -1,8 +1,9 @@
 defmodule Alexa.Registry do
   use GenServer
+  require Logger
 
   def start_link do
-    IO.puts "Starting Alexa.Registry"
+    Logger.debug "Starting Alexa.Registry"
     GenServer.start_link(__MODULE__, %{}, name: :alexa_registry)
   end
 

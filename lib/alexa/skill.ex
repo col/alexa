@@ -9,7 +9,7 @@ defmodule Alexa.Skill do
       @skill_opts unquote(opts)
 
       def start_link(opts \\ []) do
-        app_id = @skill_opts[:app_id]
+        app_id = opts[:app_id] || @skill_opts[:app_id]
         Alexa.Registry.register_skill(app_id, __MODULE__)
         Logger.info("Registered #{__MODULE__} with AppId: #{app_id}")
         GenServer.start_link(__MODULE__, nil, name: String.to_atom(app_id))

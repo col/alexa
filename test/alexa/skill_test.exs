@@ -1,6 +1,6 @@
 defmodule Alexa.SkillTest do
   use ExUnit.Case
-  alias Alexa.{Request, Response, RequestElement, User}
+  alias Alexa.{Request, Response, RequestElement}
 
   test "handle_request - LaunchRequest - default response" do
     request = %Request{ request: %RequestElement{ type: "LaunchRequest" } }
@@ -38,6 +38,15 @@ defmodule Alexa.SkillTest do
       TestSkill.start_link
     end
     :ok
+  end
+
+  test "TestSkill.start_link - registers the skill with the app_id" do
+    assert TestSkill = Alexa.Registry.get_skill("my-test-app-id")
+  end
+
+  test "TestSkill.start_link - uses the app_id provided in the options (if provided)" do
+    TestSkill.start_link([app_id: "different-app-id"])
+    assert TestSkill = Alexa.Registry.get_skill("different-app-id")
   end
 
   test "TestSkill - TestIntent" do
