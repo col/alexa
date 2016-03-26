@@ -49,6 +49,12 @@ defmodule Alexa.SkillTest do
     assert TestSkill = Alexa.Registry.get_skill("different-app-id")
   end
 
+  test "TestSkill.start_link - registers the skill with multiple app_id's when given an array" do
+    TestSkill.start_link([app_id: ["app-id-1", "app-id-2"]])
+    assert TestSkill = Alexa.Registry.get_skill("app-id-1")
+    assert TestSkill = Alexa.Registry.get_skill("app-id-2")
+  end
+
   test "TestSkill - TestIntent" do
     request = Request.intent_request("my-test-app-id", "TestIntent")
     response = Alexa.handle_request(request)
