@@ -13,6 +13,15 @@ defmodule Alexa.Request do
     }
   end
 
+  def launch_request(app_id) do
+    %Request{
+      session: Session.new(app_id),
+      request: %RequestElement{
+        type: "LaunchRequest"
+      }
+    }
+  end
+
   def application_id(request) do
     case request.session.application do
       %{ applicationId: appId } -> appId
