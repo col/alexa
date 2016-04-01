@@ -1,5 +1,5 @@
 defmodule Alexa.Response do
-  alias Alexa.{ResponseElement, OutputSpeech, Reprompt}
+  alias Alexa.{Request, ResponseElement, OutputSpeech, Reprompt}
 
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
@@ -62,6 +62,10 @@ defmodule Alexa.Response do
 
   def attributes(response, attributes) do
     %{response | sessionAttributes: attributes}
+  end
+
+  def copy_attributes(response, request) do
+    attributes(response, Request.attributes(request))
   end
 
 end

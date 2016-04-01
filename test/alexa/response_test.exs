@@ -1,6 +1,6 @@
 defmodule Alexa.ResponseTest do
   use ExUnit.Case
-  alias Alexa.{Response, ResponseElement, OutputSpeech, Reprompt}
+  alias Alexa.{Request, Response, ResponseElement, OutputSpeech, Reprompt}
 
   test "say/2" do
     response = %Response{}
@@ -106,6 +106,13 @@ defmodule Alexa.ResponseTest do
     response = Response.empty_response()
     response = Response.set_attribute(response, "Key", "Value")
     assert "Value" = Response.attribute(response, "Key")
+  end
+
+  test "copy_attributes" do
+    attributes = %{ "key1" => "value1" }
+    request = Request.intent_request("test-1", "TestIntent", nil, nil, attributes)
+    response = Response.copy_attributes(Response.empty_response(), request)
+    assert Response.attributes(response) == attributes
   end
 
 end

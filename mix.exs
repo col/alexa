@@ -29,7 +29,7 @@ defmodule Alexa.Mixfile do
 
   # Dependencies can be Hex packages:
   #
-  #   {:mydep, "~> 0.3.0"}
+  #   {:mydep, "~> 0.3.0"}m
   #
   # Or git/path repositories:
   #
