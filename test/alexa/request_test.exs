@@ -51,6 +51,14 @@ defmodule Alexa.RequestTest do
     assert "NewSlotValue" = Request.slot_value(request, "SampleKey")
   end
 
+  test "remove_slot" do
+    request = Request.intent_request("app_id", "SampleRequest", nil, %{"SampleKey" => "SampleValue"})
+    assert "SampleValue" = Request.slot_value(request, "SampleKey")
+
+    request = Request.remove_slot(request, "SampleKey")
+    assert is_nil(Request.slot_value(request, "SampleKey"))
+  end
+
   test "slot_value returns nil when not found" do
     request = %Request{}
     slot_value = Request.slot_value(request, "dollarAmount")
