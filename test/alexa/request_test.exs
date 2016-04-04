@@ -2,6 +2,20 @@ defmodule Alexa.RequestTest do
   use ExUnit.Case
   alias Alexa.{Request, Session, RequestElement, Intent, User}
 
+  test "new intent_request helper" do
+    request = Request.intent_request("app_id", "intent_name", "user_id")
+    assert Request.application_id(request) == "app_id"
+    assert Request.intent_name(request) == "intent_name"
+    assert Request.user_id(request) == "user_id"
+  end
+
+  test "new intent_request helper - slot_values" do
+    request = Request.intent_request("app_id", "intent_name", "user_id", %{ "sample_key" => "sample_value" })
+    assert Request.application_id(request) == "app_id"
+    assert Request.intent_name(request) == "intent_name"
+    assert Request.user_id(request) == "user_id"
+  end
+
   test "application_id" do
     request = %Request{ session: %Session{ application: %{ applicationId: "123" }}}
     appId = Request.application_id(request)
@@ -27,6 +41,14 @@ defmodule Alexa.RequestTest do
     request = %Request{ request: %RequestElement{ intent: intent } }
     slot_value = Request.slot_value(request, "dollarAmount")
     assert "100" = slot_value
+  end
+
+  test "set_slot_value" do
+    request = Request.intent_request("app_id", "SampleRequest", nil, %{"SampleKey" => "SampleValue"})
+    assert "SampleValue" = Request.slot_value(request, "SampleKey")
+
+    request = Request.set_slot_value(request, "SampleKey", "NewSlotValue")
+    assert "NewSlotValue" = Request.slot_value(request, "SampleKey")
   end
 
   test "slot_value returns nil when not found" do

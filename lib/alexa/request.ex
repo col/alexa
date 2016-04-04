@@ -56,6 +56,13 @@ defmodule Alexa.Request do
     |> Map.get("value", nil)
   end
 
+  def set_slot_value(request, name, value) do
+    new_slots = Map.put(slots(request), name, %{"name" => name, "value" => value})
+    new_intent = Map.put(request.request.intent, :slots, new_slots)
+    request_element = Map.put(request.request, :intent, new_intent)
+    Map.put(request, :request, request_element)
+  end
+
   def slot_attributes(request) do
     slots(request)
     |> Enum.reduce(%{}, fn({name, slot}, map) ->
