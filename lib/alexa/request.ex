@@ -13,11 +13,20 @@ defmodule Alexa.Request do
     }
   end
 
-  def launch_request(app_id) do
+  def launch_request(app_id, user_id \\ nil) do
     %Request{
-      session: Session.new(app_id),
+      session: Session.new(app_id, user_id),
       request: %RequestElement{
         type: "LaunchRequest"
+      }
+    }
+  end
+
+  def session_ended_request(app_id, user_id \\ nil) do
+    %Request{
+      session: Session.new(app_id, user_id),
+      request: %RequestElement{
+        type: "SessionEndedRequest"
       }
     }
   end
