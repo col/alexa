@@ -105,4 +105,9 @@ defmodule Alexa.Request do
     session = %{ request.session | user: User.new(user_id) }
     %{ request | session: session }
   end
+
+  def new_session?(request) do
+    request.session.new
+  end
+
 end

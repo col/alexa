@@ -128,4 +128,14 @@ defmodule Alexa.RequestTest do
     request = Request.set_user_id(request, "new_user_id")
     assert "new_user_id" = Request.user_id(request)
   end
+
+  test "new_session? - when new" do
+    request = %Request{ session: %Session{ new: true } }
+    assert Request.new_session?(request)
+  end
+
+  test "new_session? - when not new" do
+    request = %Request{ session: %Session{ new: false } }
+    refute Request.new_session?(request)
+  end
 end
