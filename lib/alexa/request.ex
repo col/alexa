@@ -85,7 +85,7 @@ defmodule Alexa.Request do
   end
 
   def attributes(request) do
-    request.session.attributes
+    request.session.attributes || %{}
   end
 
   def attribute(request, key) do

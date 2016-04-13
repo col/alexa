@@ -105,6 +105,12 @@ defmodule Alexa.RequestTest do
     assert "value" == result
   end
 
+  test "attribute - does not crash when attributes is nil" do
+    request = %Request{ session: %Session{ attributes: nil }}
+    result = Request.attribute(request, "key")
+    assert result == nil
+  end
+
   test "set_attribute/3" do
     request = %Request{ session: %Session{ attributes: %{ "key" => "value" } }}
     request = Request.set_attribute(request, "key2", "value2")
