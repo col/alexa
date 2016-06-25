@@ -85,7 +85,7 @@ defmodule Alexa.Request do
   end
 
   def attributes(request) do
-    request.session.attributes
+    request.session.attributes || %{}
   end
 
   def attribute(request, key) do
@@ -114,4 +114,9 @@ defmodule Alexa.Request do
     session = %{ request.session | user: User.new(nil, access_token) }
     %{ request | session: session }
   end
+
+  def new_session?(request) do
+    request.session.new
+  end
+
 end
