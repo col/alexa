@@ -9,6 +9,13 @@ defmodule Alexa.RequestTest do
     assert Request.user_id(request) == "user_id"
   end
 
+  test "new intent_request helper with access token" do
+    request = Request.intent_request("app_id", "intent_name", "user_id", nil, %{}, "user-access-token")
+    assert Request.application_id(request) == "app_id"
+    assert Request.intent_name(request) == "intent_name"
+    assert Request.access_token(request) == "user-access-token"
+  end
+
   test "new intent_request helper - slot_values" do
     request = Request.intent_request("app_id", "intent_name", "user_id", %{ "sample_key" => "sample_value" })
     assert Request.application_id(request) == "app_id"
@@ -128,4 +135,17 @@ defmodule Alexa.RequestTest do
     request = Request.set_user_id(request, "new_user_id")
     assert "new_user_id" = Request.user_id(request)
   end
+
+  test "access_token" do
+    request = %Request{ session: %Session{ user: User.new("user123", "user-access-token") } }
+    access_token = Request.access_token(request)
+    assert "user-access-token" = access_token
+  end
+
+  test "set_access_token" do
+    request = %Request{ session: %Session{ user: User.new("user123") } }
+    request = Request.set_access_token(request, "new-user-access-token")
+    assert "new-user-access-token" = Request.access_token(request)
+  end
+
 end

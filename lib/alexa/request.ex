@@ -3,9 +3,9 @@ defmodule Alexa.Request do
 
   defstruct [session: %Session{}, version: "1.0", request: %RequestElement{}]
 
-  def intent_request(app_id, intent_name, user_id \\ nil, slot_values \\ nil, attributes \\ %{}) do
+  def intent_request(app_id, intent_name, user_id \\ nil, slot_values \\ nil, attributes \\ %{}, access_token \\ nil) do
     %Request{
-      session: Session.new(app_id, user_id, attributes),
+      session: Session.new(app_id, user_id, attributes, access_token),
       request: %RequestElement{
         type: "IntentRequest",
         intent: Intent.new(intent_name, slot_values)
@@ -13,9 +13,9 @@ defmodule Alexa.Request do
     }
   end
 
-  def launch_request(app_id, user_id \\ nil) do
+  def launch_request(app_id, user_id \\ nil, access_token \\ nil) do
     %Request{
-      session: Session.new(app_id, user_id),
+      session: Session.new(app_id, user_id, access_token),
       request: %RequestElement{
         type: "LaunchRequest"
       }
@@ -103,6 +103,15 @@ defmodule Alexa.Request do
 
   def set_user_id(request, user_id) do
     session = %{ request.session | user: User.new(user_id) }
+    %{ request | session: session }
+  end
+
+  def access_token(request) do
+    Map.get(request.session, :user, User.new) |> Map.get(:accessToken)
+  end
+
+  def set_access_token(request, access_token) do
+    session = %{ request.session | user: User.new(nil, access_token) }
     %{ request | session: session }
   end
 end
