@@ -121,4 +121,9 @@ defmodule Alexa.ResponseTest do
     assert Response.attributes(response) == attributes
   end
 
+  test "card/4" do
+    response = Response.empty_response
+      |> Response.card("LinkAccount", "Link Account", "You can link your account here.")
+    assert %Alexa.Card{type: "LinkAccount", title: "Link Account", content: "You can link your account here."} = Response.card(response)
+  end
 end

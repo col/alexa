@@ -1,5 +1,5 @@
 defmodule Alexa.Response do
-  alias Alexa.{Request, ResponseElement, OutputSpeech, Reprompt}
+  alias Alexa.{Request, ResponseElement, OutputSpeech, Reprompt, Card}
 
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
@@ -68,4 +68,12 @@ defmodule Alexa.Response do
     attributes(response, Request.attributes(request))
   end
 
+  def card(response, type, title, content) do
+    card = Card.new(type, title, content)
+    %{ response | response: %{response.response | card: card} }
+  end
+
+  def card(response) do
+    response.response.card
+  end
 end
