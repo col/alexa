@@ -20,6 +20,12 @@ defmodule Alexa.ResponseTest do
     assert "Hello World!" = say
   end
 
+  test "say/1 when response is empty" do
+    response = Response.empty_response
+    say = Response.say(response)
+    assert nil == say
+  end
+
   test "say_ssml/2" do
     response = %Response{}
     response = Response.say_ssml(response, "<speak>Hello</speak>")
