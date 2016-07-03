@@ -15,7 +15,7 @@ defmodule Alexa.Request do
 
   def launch_request(app_id, user_id \\ nil, access_token \\ nil) do
     %Request{
-      session: Session.new(app_id, user_id, access_token),
+      session: Session.new(app_id, user_id, %{}, access_token),
       request: %RequestElement{
         type: "LaunchRequest"
       }
