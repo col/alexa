@@ -114,6 +114,13 @@ defmodule Alexa.ResponseTest do
     assert "Value" = Response.attribute(response, "Key")
   end
 
+  test "remove_attribute/3" do
+    response = Response.empty_response() |> Response.add_attribute("Key", "Value")
+    assert Response.attribute(response, "Key")
+    response = Response.remove_attribute(response, "Key")
+    refute Response.attribute(response, "Key")
+  end
+
   test "copy_attributes" do
     attributes = %{ "key1" => "value1" }
     request = Request.intent_request("test-1", "TestIntent", nil, nil, attributes)

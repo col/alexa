@@ -56,6 +56,10 @@ defmodule Alexa.Response do
     %{ response | sessionAttributes: Map.put(response.sessionAttributes, key, value) }
   end
 
+  def remove_attribute(response, key) do
+    %{ response | sessionAttributes: Map.delete(response.sessionAttributes, key) }
+  end
+
   def attributes(response) do
     response.sessionAttributes
   end
