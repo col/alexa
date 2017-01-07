@@ -8,8 +8,8 @@ defmodule Alexa.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      description: "Framework for implementing an Amazon Alexa Skill.",
-     package: package,
-     deps: deps]
+     package: package(),
+     deps: deps()]
   end
 
   def package do
