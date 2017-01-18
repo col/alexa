@@ -1,6 +1,6 @@
 defmodule Alexa.SkillTest do
   use ExUnit.Case
-  alias Alexa.{Request, Response, RequestElement}
+  alias Alexa.{Request, Response, RequestElement, Session}
 
   test "handle_request - LaunchRequest - default response" do
     request = %Request{ request: %RequestElement{ type: "LaunchRequest" } }
@@ -14,6 +14,13 @@ defmodule Alexa.SkillTest do
     response = Alexa.handle_request(request)
     assert "Sorry, I don't know how to answer that." = Response.say(response)
     assert false == Response.should_end_session(response)
+  end
+
+  test "handle_intent - IntentRequest - session attributes are copied to response" do
+    request = %Request{ request: %RequestElement{ type: "IntentRequest" },
+                        session: %Session {attributes: %{"one": "value"}}}
+    response = Alexa.handle_request(request)
+    assert "value" == Response.attribute(response,:one)
   end
 
   test "handle_session_ended - SessionEndedRequest - default response" do

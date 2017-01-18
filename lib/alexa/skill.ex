@@ -22,13 +22,14 @@ defmodule Alexa.Skill do
       def handle_request(request) do
         Logger.debug("### Request ###")
         Logger.debug("#{inspect request}")
+        response = copy_attributes(empty_response(), request)
         # TODO: this is not using the skill process yet, it's just calling the handler directly.
         # TODO: ultimately each alexa session should spawn it's own process and the request
         # TODO: should be delegated to the correct process for handling.
         case type(request) do
-          "LaunchRequest" -> handle_launch(request, empty_response())
-          "IntentRequest" -> handle_intent(intent_name(request), request, empty_response())
-          "SessionEndedRequest" -> handle_session_ended(request, empty_response())
+          "LaunchRequest" -> handle_launch(request, response)
+          "IntentRequest" -> handle_intent(intent_name(request), request, response)
+          "SessionEndedRequest" -> handle_session_ended(request, response)
         end
       end
 
