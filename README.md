@@ -30,8 +30,18 @@ Creating a new Alexa skill is easy.
       end
     end
 
-This will register your skill with the Alexa module. It will be used to
-handle any incoming requests with the matching app_id.
+`Alexa.Skill` implements Elixir's [Application](https://hexdocs.pm/elixir/master/Application.html#content) 
+behaviour, so you need to start a worker process for your skill. Add 
+something like this to your application's supervision tree.
+
+    worker(MyAwesomeSkill, [])
+
+You can also optionally pass the app_id at this point as well.
+
+    worker(MyAwesomeSkill, [[app_id: Application.get_env(:my_awesome_skill, :alexa_app_id)]])
+
+When your application starts, this will register your skill with the Alexa 
+module. It will be used to handle any incoming requests with the matching app_id.
 
 Then create an app that exposes an endpoint so that you can receive incoming
 Alexa requests.
