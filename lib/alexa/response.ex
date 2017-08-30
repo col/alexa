@@ -1,5 +1,5 @@
 defmodule Alexa.Response do
-  alias Alexa.{Request, ResponseElement, OutputSpeech, Reprompt, Card}
+  alias Alexa.{Request, ResponseElement, OutputSpeech, Reprompt, Card, Directive}
 
   defstruct [version: "1.0", sessionAttributes: %{}, response: %ResponseElement{}]
 
@@ -79,5 +79,14 @@ defmodule Alexa.Response do
 
   def card(response) do
     response.response.card
+  end
+
+  def directives(response) do
+    response.response.directives
+  end
+
+  def add_directive(response, %{} = directive) do
+    directive = Directive.from_params(directive)
+    %{ response | response: %{response.response | directives: [directive | response.response.directives]} }
   end
 end

@@ -1,6 +1,6 @@
 defmodule Alexa.ResponseTest do
   use ExUnit.Case
-  alias Alexa.{Request, Response, ResponseElement, OutputSpeech, Reprompt}
+  alias Alexa.{Request, Response, ResponseElement, OutputSpeech, Reprompt, Directive}
 
   test "say/2" do
     response = %Response{}
@@ -132,5 +132,36 @@ defmodule Alexa.ResponseTest do
     response = Response.empty_response
       |> Response.card("LinkAccount", "Link Account", "You can link your account here.")
     assert %Alexa.Card{type: "LinkAccount", title: "Link Account", content: "You can link your account here."} = Response.card(response)
+  end
+
+  test "directives/1" do
+    directive_1 = %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 1"}}
+    directive_2 = %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 2"}}
+    response = %Response{
+      response: %ResponseElement{
+        directives: [directive_2, directive_1]
+      }
+    }
+    assert [
+      %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 2"}},
+      %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 1"}}
+    ] = Response.directives(response)
+  end
+
+  test "add_directive/2" do
+    directive_params = %{
+      type: "Display.RenderTemplate",
+      template: %{
+        title: "a title 1"
+      }
+    }
+    directive_params_2 = put_in(directive_params, [:template, :title], "a title 2")
+    response = Response.empty_response
+      |> Response.add_directive(directive_params)
+      |> Response.add_directive(directive_params_2)
+    assert [
+      %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 2"}},
+      %Directive{type: "Display.RenderTemplate", template: %{"title" => "a title 1"}}
+    ] = Response.directives(response)
   end
 end
