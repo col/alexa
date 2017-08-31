@@ -35,6 +35,12 @@ defmodule Alexa.RequestTest do
     assert "SampleName" = intent_name
   end
 
+  test "token" do
+    request = %Request{ request: %RequestElement{ token: "abc123"} }
+    expected_value = Request.token(request)
+    assert "abc123" = expected_value
+  end
+
   test "slots" do
     slots = %{ "testKey" => %{ "name" => "testKey", "value" => "testValue" } }
     request = %Request{ request: %RequestElement{ intent: %Intent{ slots: slots } } }
