@@ -46,6 +46,10 @@ defmodule Alexa.Request do
     request.request.type
   end
 
+  def token(request) do
+    request.request.token
+  end
+
   def slots(request) do
     Map.get(request.request.intent, :slots) || %{}
   end

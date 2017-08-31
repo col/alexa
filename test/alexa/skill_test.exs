@@ -23,6 +23,20 @@ defmodule Alexa.SkillTest do
     assert "value" == Response.attribute(response,:one)
   end
 
+  test "handle_intent - Display.ElementSelected - default response" do
+    request = %Request{ request: %RequestElement{ type: "Display.ElementSelected" } }
+    response = Alexa.handle_request(request)
+    assert "Sorry, no action has been set up." = Response.say(response)
+    assert false == Response.should_end_session(response)
+  end
+
+  test "handle_intent - Display.ElementSelected - session attributes are copied to response" do
+    request = %Request{ request: %RequestElement{ type: "Display.ElementSelected" },
+                        session: %Session {attributes: %{"one": "value"}}}
+    response = Alexa.handle_request(request)
+    assert "value" == Response.attribute(response,:one)
+  end
+
   test "handle_session_ended - SessionEndedRequest - default response" do
     request = %Request{ request: %RequestElement{ type: "SessionEndedRequest" } }
     response = Alexa.handle_request(request)

@@ -29,6 +29,7 @@ defmodule Alexa.Skill do
         case type(request) do
           "LaunchRequest" -> handle_launch(request, response)
           "IntentRequest" -> handle_intent(intent_name(request), request, response)
+          "Display.ElementSelected" -> handle_display_element_selected(request, response)
           "SessionEndedRequest" -> handle_session_ended(request, response)
         end
       end
@@ -42,6 +43,12 @@ defmodule Alexa.Skill do
       def handle_intent(_, _, response) do
         response
         |> say("Sorry, I don't know how to answer that.")
+        |> should_end_session(false)
+      end
+
+      def handle_display_element_selected(_, response) do
+        response
+        |> say("Sorry, no action has been set up.")
         |> should_end_session(false)
       end
 
@@ -63,7 +70,7 @@ defmodule Alexa.Skill do
         {:noreply, nil, state}
       end
 
-      defoverridable [handle_launch: 2, handle_intent: 3, handle_session_ended: 2]
+      defoverridable [handle_launch: 2, handle_intent: 3, handle_session_ended: 2, handle_display_element_selected: 2]
     end
   end
 
