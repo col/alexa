@@ -1,8 +1,11 @@
 defmodule Alexa.Card do
-  alias Alexa.Card
-  defstruct [type: "Simple", title: nil, content: nil]
+  defstruct [type: "Simple", title: nil, content: nil, text: nil, image: nil]
 
   def new(type, title, content) do
-    %Card{type: type, title: title, content: content}
+    %__MODULE__{type: type, title: title, content: content}
+  end
+
+  def new(type, title, content, text, image) do
+    %__MODULE__{type: type, title: title, content: content, text: text, image: image}
   end
 end

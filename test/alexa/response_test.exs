@@ -128,10 +128,26 @@ defmodule Alexa.ResponseTest do
     assert Response.attributes(response) == attributes
   end
 
-  test "card/4" do
+  test "card/6" do
     response = Response.empty_response
       |> Response.card("LinkAccount", "Link Account", "You can link your account here.")
     assert %Alexa.Card{type: "LinkAccount", title: "Link Account", content: "You can link your account here."} = Response.card(response)
+  end
+
+  test "card/6 with text and image" do
+    images = %{
+      "smallImageUrl": "https://example.com/sm_image.jpg",
+      "largeImageUrl": "https://example.com/lg_image.jpg"
+    }
+    response = Response.empty_response
+      |> Response.card("LinkAccount", "Link Account", "You can link your account here.", "Linking text.", images)
+    assert %Alexa.Card{
+      type: "LinkAccount",
+      title: "Link Account",
+      content: "You can link your account here.",
+      text: "Linking text.",
+      image: images
+    } = Response.card(response)
   end
 
   test "directives/1" do
