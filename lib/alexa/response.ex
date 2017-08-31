@@ -72,8 +72,8 @@ defmodule Alexa.Response do
     attributes(response, Request.attributes(request))
   end
 
-  def card(response, type, title, content) do
-    card = Card.new(type, title, content)
+  def card(response, type, title, content, text \\ nil, image \\nil) do
+    card = Card.new(type, title, content, text, image)
     %{ response | response: %{response.response | card: card} }
   end
 
