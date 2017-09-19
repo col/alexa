@@ -63,3 +63,7 @@ Here's an example plug implementation:
         conn
       end
     end
+
+Here's an example Phoenix Boilerplate project for bootstrapping your Alexa skill:
+[SDITools/alexa_hello_world](https://github.com/SDITools/alexa_hello_world)
+
